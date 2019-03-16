@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    {% if i %}
+    <div class="columns">
+        <div class="column is-12">
+            <form action="{% url 'measurements:item' session_id q.name i.order %}" method="POST">
+                {% csrf_token %}
+                <p class="has-text-weight-bold">{{ i.root}}</p>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column is-12">
+            <ul>
+                {% for r in response_options %}
+                <li>
+                    <label class="radio">
+                        <input type="radio" name="item_response" value={{r.name}} required>
+                        {{ r.label }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="columns is-mobile">
+        <div class="column is-3">
+            <a class="button is-fullwidth" href="#">Previous</a>
+        </div>
+        <div class="column is-mobile is-3 is-offset-6">
+            <input class="button is-fullwidth" type="submit" value="Next">
+        </div>
+    </div>
+    <div class="columns">
+        <br>
+        <p class="is-italic">{{ i.order }} / {{ q.length }}</p>
+    </form>
+    </div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %} {% block content %}
+<ul>
+  {% if questionnaires %}
+  <h2 class="is-size-4">Questionnaires</h2>
+  <!-- Get questionnaire categories  -->
+  {% for c in q_categories %}
+  <!-- Don't show category name if there's no member. -->
+  {% if c.questionnairecategorymember_set.all %}
+  <h3 class="is-size-5">{{ c.name }}</h3>
+  <div class="buttons">
+    {% for q in questionnaires %}
+    <!-- Links for questionnaires in the category -->
+    {% if q.questionnairecategorymember.category == c %}
+    <a class="button is-fullwidth" href="{% url 'measurements:start' q.name %}">
+      {{ q.name }}
+    </a>
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %} {% endfor %} {% endif %}
+
+  <h2 class="is-size-4">Measurement History</h2>
+  {% if user_sessions %}
+  <div class="buttons">
+    {% for q_name, count in user_sessions.items %}
+    <a
+      class="button is-fullwidth"
+      href="{% url 'measurements:history' q_name %}"
+      >{{ q_name }} ({{ count }})</a
+    >
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>Your measurements will be listed here.</p>
+  {% endif %}
+</ul>
+{% endblock content %}

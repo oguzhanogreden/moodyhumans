@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %} {% block content %}
+
+<p class="title">Account</p>
+
+<p class="title">Data Export</p>
+
+<p class="title is-5">OpenHumans</p>
+
+{% if not oh_authenticated %} {% if OHMemberInUse %}
+<div class="notification is-danger">
+  <!-- <button class="delete"></button> -->
+  You logged in with an OpenHumans account that is already being used by another
+  Moody Humans account.
+</div>
+{% endif %}
+<a class="button is-fullwidth" href="{% url 'main:oh_auth' %}"
+  >Link your OpenHumans account</a
+>
+{% else %}
+<a class="button is-fullwidth" href="{% url 'main:oh_upload' %}"
+  >Upload data to OpenHumans</a
+>
+{% endif %} {% endblock %}

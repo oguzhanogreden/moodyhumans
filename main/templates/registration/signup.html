@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'main:signup' %}">
+        {% csrf_token %}
+
+        <div class="field is-expanded">
+            <div class="control">
+                <input class="input" id="id_username" name="username" 
+                        type="text" placeholder="Username" maxlength="150" required>
+            </div>
+        </div>
+
+        <div class="field is-expanded">
+            <div class="control">
+                <input class="input" id="id_password" name="password" 
+                        type="password" placeholder="Password" required>
+            </div>
+        </div>
+
+        <div class="field is-expanded">
+                <div class="control">
+                    <input class="input" id="id_password_repeat" name="password_repeat" 
+                            type="password" placeholder="Password (repeat)" required>
+                </div>
+            </div>
+
+        <div class="field is-grouped is-grouped-right">
+            <div class="control">
+                <input class="button" type="submit" value="Register">
+                <input type="hidden" name="next" value="{{ next }}">
+            </div>
+        </div>
+        </form>
+{% endblock content %}

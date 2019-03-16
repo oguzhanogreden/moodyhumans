@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %} {% block content %} {% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %} {% if next %} {% if user.is_authenticated %}
+<p>
+  Your account doesn't have access to this page. To proceed, please login with
+  an account that has access.
+</p>
+{% else %}
+
+<p class="title">Login</p>
+
+<div class="content">
+  <p>
+    You need to login to use Moody Humans. You can find more information
+    <a href="{% url 'main:about' %}">here</a> and create an account
+    <a href="{% url 'main:signup' %}">here</a>.
+  </p>
+</div>
+
+<form method="post" action="{% url 'main:login' %}">
+  {% csrf_token %}
+
+  <div class="field is-expanded">
+    <div class="control">
+      <input
+        class="input"
+        id="id_username"
+        name="username"
+        type="text"
+        placeholder="Username"
+      />
+    </div>
+  </div>
+
+  <div class="field is-expanded">
+    <div class="control">
+      <input
+        class="input"
+        id="id_password"
+        name="password"
+        type="password"
+        placeholder="Password"
+      />
+    </div>
+  </div>
+
+  <div class="field is-grouped is-grouped-right">
+    <div class="control">
+      <input class="button" type="submit" value="Log in" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+  </div>
+</form>
+
+<p class="title">Or...</p>
+<a href="{% url 'main:oh_auth' %}" class="button is-fullwidth"
+  >Log in using Open Humans</a
+>
+
+{# Assumes you setup the password_reset view in your URLconf #}
+{# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #} 
+
+{% endif %} {% endif %} {% endblock content %}

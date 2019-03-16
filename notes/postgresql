@@ -1,0 +1,22 @@
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04
+
+# Install psycopg2 from pip.
+
+# Start server
+sudo /etc/calhostinit.d/postgresql start
+
+# Switch to postgres role:
+sudo -u postgres psql postgres
+
+# Create new user
+sudo -u postgres createuser --interactive
+
+# user: mht, oguzhan
+# db: mht
+
+# Connect
+psql -d mht
+# Show tables
+\dt
+# Or directly query
+SELECT * FROM measurements_measurementsession;
